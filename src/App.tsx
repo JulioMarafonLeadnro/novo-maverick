@@ -18,7 +18,7 @@ import Gsap from "./components/front2/Gsap.tsx";
 import React from "./components/front2/React.tsx";
 
 import Design from "./components/design/Design.tsx";
-import Figma from "./components/design/figma.tsx";
+import Figma from "./components/design/Figma.tsx";
 import Pencil from "./components/design/Pencil.tsx";
 import Ihc from "./components/ihc/Ihc.tsx";
 import Teoria from "./components/ihc/teoria.tsx";
@@ -124,16 +124,16 @@ function App() {
           <Route path="/front1/css" element={<Css />} />
           <Route path="/front1/img" element={<Imagem />} />
           <Route path="/front1/bootstrap" element={<Bootstrap />} />
-          
+
           <Route path="/front2" element={<Front2 />} />
           <Route path="/front2/js" element={<Javascript />} />
           <Route path="/front2/gsap" element={<Gsap />} />
           <Route path="/front2/react" element={<React />} />
-          
+
           <Route path="/design" element={<Design />} />
           <Route path="/design/figma" element={<Figma />} />
           <Route path="/design/pencil" element={<Pencil />} />
-          
+
           <Route path="/ihc" element={<Ihc />} />
           <Route path="/ihc/teoria" element={<Teoria />} />
           <Route path="/ihc/teste" element={<Teste />} />
