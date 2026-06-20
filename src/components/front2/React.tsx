@@ -1,4 +1,7 @@
+import { useLanguage } from '../../context/LanguageContext';
+
 function React() {
+  const { idioma } = useLanguage();
 
   return(
     <>

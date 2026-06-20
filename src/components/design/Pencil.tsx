@@ -1,4 +1,7 @@
+import { useLanguage } from '../../context/LanguageContext';
+
 function Pencil() {
+  const { idioma } = useLanguage();
 
   return (
     <>

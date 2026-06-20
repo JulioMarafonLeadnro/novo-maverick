@@ -29,13 +29,14 @@ import Teste from "./components/ihc/Teste.tsx";
 import Heuristica from "./components/ihc/Heuristica.tsx";
 
 import { useState, useEffect } from 'react';
+import { useLanguage } from './context/LanguageContext';
 
 
 
 function App() {
   const [tema, setTema] = useState<'claro' | 'escuro' | 'maverick'>('claro');
   const [visible, setVisible] = useState(false);
-  const [idioma, setIdioma] = useState<'pt' | 'en'>('pt');
+  const { idioma, setIdioma } = useLanguage();
 
   useGSAP(() => {
     const h1 = new SplitText("h1", {
@@ -155,7 +156,7 @@ function App() {
                 <li className="HoverCor"><Link to="front1/css">CSS</Link></li>
                 <li className="HoverCor"><Link to="front1/bootstrap">Bootstrap</Link></li>
                 <li className="HoverCor"><Link to="front1/tailwind">Tailwind CSS</Link></li>
-                <li className="HoverCor"><Link to="front1/img">Edição de imagem</Link></li>
+                <li className="HoverCor"><Link to="front1/img">{idioma === 'pt' ? 'Edição de imagem' : 'Image Editing'}</Link></li>
               </ul>
             </div>
 
@@ -169,7 +170,7 @@ function App() {
             </div>
 
             <div className="discipline design">
-              <h3 className="HoverCor"><Link to="design">Design Gráfico</Link></h3>
+              <h3 className="HoverCor"><Link to="design">{idioma === 'pt' ? 'Design Gráfico' : 'Graphic Design'}</Link></h3>
               <ul>
                 <li className="HoverCor"><Link to="design/figma">Figma</Link></li>
                 <li className="HoverCor"><Link to="design/pencil">Pencil</Link></li>
@@ -177,11 +178,11 @@ function App() {
             </div>
 
             <div className="discipline ihc">
-              <h3 className="HoverCor"><Link to="ihc">IHC</Link></h3>
+              <h3 className="HoverCor"><Link to="ihc">{idioma === 'pt' ? 'IHC' : 'HCI'}</Link></h3>
               <ul>
-                <li className="HoverCor"><Link to="ihc/teoria">Teoria de interação humano computador</Link></li>
-                <li className="HoverCor"><Link to="ihc/teste">Teste de usabilidade</Link></li>
-                <li className="HoverCor"><Link to="ihc/heuristica">Avaliação heurística</Link></li>
+                <li className="HoverCor"><Link to="ihc/teoria">{idioma === 'pt' ? 'Teoria de interação humano computador' : 'Human-Computer Interaction Theory'}</Link></li>
+                <li className="HoverCor"><Link to="ihc/teste">{idioma === 'pt' ? 'Teste de usabilidade' : 'Usability Testing'}</Link></li>
+                <li className="HoverCor"><Link to="ihc/heuristica">{idioma === 'pt' ? 'Avaliação heurística' : 'Heuristic Evaluation'}</Link></li>
               </ul>
             </div>
           </div>
@@ -220,7 +221,7 @@ function App() {
         onClick={handleClick}
         style={{ opacity: 0, pointerEvents: "auto" }}
       >
-        Inicio
+        {idioma === 'pt' ? 'Inicio' : 'Top'}
       </button>
     </>
   );
