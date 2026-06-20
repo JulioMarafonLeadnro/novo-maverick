@@ -35,6 +35,7 @@ import { useState, useEffect } from 'react';
 function App() {
   const [tema, setTema] = useState<'claro' | 'escuro' | 'maverick'>('claro');
   const [visible, setVisible] = useState(false);
+  const [idioma, setIdioma] = useState<'pt' | 'en'>('pt');
 
   useGSAP(() => {
     const h1 = new SplitText("h1", {
@@ -102,13 +103,12 @@ function App() {
         <section className="sideMenu" >
           <div>
             <img src="/img/logoUTFPR.png" alt="Logo UTFPR" style={{ width: '300px', maxWidth: '100%', paddingBottom: '16px' }} />
-
-            <h1> <Link to="/">{text.title}</Link> </h1>
-            <h2>{text.subtitle}</h2>
+            <h1> <Link to="/">{text[idioma].title}</Link> </h1>
+            <h2>{text[idioma].subtitle}</h2>
 
             <div style={{ marginTop: '16px', marginBottom: '16px' }}>
               <label htmlFor="theme-select" style={{ display: 'block', fontSize: '0.9rem', marginBottom: '4px', fontWeight: 'bold' }}>
-                Mudar Visual:
+                {idioma === 'pt' ? 'Mudar Visual:' : 'Change Theme:'}
               </label>
               <select
                 id="theme-select"
@@ -116,9 +116,25 @@ function App() {
                 onChange={(e) => setTema(e.target.value as any)}
                 style={{ padding: '6px', width: '100%', borderRadius: '4px', cursor: 'pointer' }}
               >
-                <option value="claro">Modo Claro</option>
-                <option value="escuro">Modo Escuro</option>
+                <option value="claro">{idioma === 'pt' ? 'Modo Claro' : 'Light Mode'}</option>
+                <option value="escuro">{idioma === 'pt' ? 'Modo Escuro' : 'Dark Mode'}</option>
 
+              </select>
+            </div>
+
+            {/* Seletor de Idioma */}
+            <div style={{ marginTop: '16px', marginBottom: '16px' }}>
+              <label htmlFor="lang-select" style={{ display: 'block', fontSize: '0.9rem', marginBottom: '4px', fontWeight: 'bold' }}>
+                {idioma === 'pt' ? 'Idioma:' : 'Language:'}
+              </label>
+              <select
+                id="lang-select"
+                value={idioma}
+                onChange={(e) => setIdioma(e.target.value as 'pt' | 'en')}
+                style={{ padding: '6px', width: '100%', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                <option value="pt">Português</option>
+                <option value="en">English</option>
               </select>
             </div>
           </div>
