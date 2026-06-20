@@ -18,7 +18,7 @@ import Tailwind from "./components/front1/Tailwind.tsx";
 import Front2 from "./components/front2/Front2.tsx";
 import Javascript from "./components/front2/Javascript.tsx";
 import Gsap from "./components/front2/Gsap.tsx";
-import React from "./components/front2/React.tsx";
+import ReactPage from "./components/front2/React.tsx";
 
 import Design from "./components/design/Design.tsx";
 import Figma from "./components/design/Figma.tsx";
@@ -28,11 +28,13 @@ import Teoria from "./components/ihc/Teoria.tsx";
 import Teste from "./components/ihc/Teste.tsx";
 import Heuristica from "./components/ihc/Heuristica.tsx";
 
+import { useState, useEffect } from 'react';
 
-import { useState } from 'react';
+
 
 function App() {
   const [tema, setTema] = useState<'claro' | 'escuro' | 'maverick'>('claro');
+  const [visible, setVisible] = useState(false);
 
   useGSAP(() => {
     const h1 = new SplitText("h1", {
@@ -71,7 +73,27 @@ function App() {
       duration: 2,
       stagger: 0.5
     });
+
   });
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    gsap.to("#back-to-top", {
+      opacity: visible ? 1 : 0,
+      pointerEvents: visible ? "auto" : "none",
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }, [visible]);
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -105,45 +127,45 @@ function App() {
 
           <div className="disciplines">
             <div className="discipline slides">
-              <h3> <Link to="slides">Slides</Link> </h3>
+              <h3 className="HoverCor"> <Link to="slides">Slides</Link> </h3>
             </div>
           </div>
 
           <div className="disciplines">
             <div className="discipline front1">
-              <h3> <Link to="front1">Front 1</Link> </h3>
+              <h3 className="HoverCor"> <Link to="front1">Front 1</Link> </h3>
               <ul>
-                <li><Link to="front1/html">HTML</Link></li>
-                <li><Link to="front1/css">CSS</Link></li>
-                <li><Link to="front1/bootstrap">Bootstrap</Link></li>
-                <li><Link to="front1/tailwind">Tailwind CSS</Link></li>
-                <li><Link to="front1/img">Edição de imagem</Link></li>
+                <li className="HoverCor"><Link to="front1/html">HTML</Link></li>
+                <li className="HoverCor"><Link to="front1/css">CSS</Link></li>
+                <li className="HoverCor"><Link to="front1/bootstrap">Bootstrap</Link></li>
+                <li className="HoverCor"><Link to="front1/tailwind">Tailwind CSS</Link></li>
+                <li className="HoverCor"><Link to="front1/img">Edição de imagem</Link></li>
               </ul>
             </div>
 
             <div className="discipline front2">
-              <h3><Link to="front2">Front 2</Link></h3>
+              <h3 className="HoverCor"><Link to="front2">Front 2</Link></h3>
               <ul>
-                <li><Link to="front2/js">JavaScript</Link></li>
-                <li><Link to="front2/gsap">GSAP</Link></li>
-                <li><Link to="front2/react">React</Link></li>
+                <li className="HoverCor"><Link to="front2/js">JavaScript</Link></li>
+                <li className="HoverCor"><Link to="front2/gsap">GSAP</Link></li>
+                <li className="HoverCor"><Link to="front2/react">React</Link></li>
               </ul>
             </div>
 
             <div className="discipline design">
-              <h3><Link to="design">Design Gráfico</Link></h3>
+              <h3 className="HoverCor"><Link to="design">Design Gráfico</Link></h3>
               <ul>
-                <li><Link to="design/figma">Figma</Link></li>
-                <li><Link to="design/pencil">Pencil</Link></li>
+                <li className="HoverCor"><Link to="design/figma">Figma</Link></li>
+                <li className="HoverCor"><Link to="design/pencil">Pencil</Link></li>
               </ul>
             </div>
 
             <div className="discipline ihc">
-              <h3><Link to="ihc">IHC</Link></h3>
+              <h3 className="HoverCor"><Link to="ihc">IHC</Link></h3>
               <ul>
-                <li><Link to="ihc/teoria">Teoria de interação humano computador</Link></li>
-                <li><Link to="ihc/teste">Teste de usabilidade</Link></li>
-                <li><Link to="ihc/heuristica">Avaliação heurística</Link></li>
+                <li className="HoverCor"><Link to="ihc/teoria">Teoria de interação humano computador</Link></li>
+                <li className="HoverCor"><Link to="ihc/teste">Teste de usabilidade</Link></li>
+                <li className="HoverCor"><Link to="ihc/heuristica">Avaliação heurística</Link></li>
               </ul>
             </div>
           </div>
@@ -152,7 +174,7 @@ function App() {
         <section className="ConteudoPrincipal">
           <Routes>
             <Route path="/slides" element={<Slides />} />
-            
+
             <Route path="/front1" element={<Front1 />} />
             <Route path="/front1/html" element={<Html />} />
             <Route path="/front1/css" element={<Css />} />
@@ -163,7 +185,7 @@ function App() {
             <Route path="/front2" element={<Front2 />} />
             <Route path="/front2/js" element={<Javascript />} />
             <Route path="/front2/gsap" element={<Gsap />} />
-            <Route path="/front2/react" element={<React />} />
+            <Route path="/front2/react" element={<ReactPage />} />
 
             <Route path="/design" element={<Design />} />
             <Route path="/design/figma" element={<Figma />} />
@@ -173,10 +195,17 @@ function App() {
             <Route path="/ihc/teoria" element={<Teoria />} />
             <Route path="/ihc/teste" element={<Teste />} />
             <Route path="/ihc/heuristica" element={<Heuristica />} />
-            
+
           </Routes>
         </section>
       </section>
+      <button
+        id="back-to-top"
+        onClick={handleClick}
+        style={{ opacity: 0, pointerEvents: "auto" }}
+      >
+        Inicio
+      </button>
     </>
   );
 }
