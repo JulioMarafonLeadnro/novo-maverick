@@ -18,7 +18,7 @@ import Tailwind from "./components/front1/Tailwind.tsx";
 import Front2 from "./components/front2/Front2.tsx";
 import Javascript from "./components/front2/Javascript.tsx";
 import Gsap from "./components/front2/Gsap.tsx";
-import React from "./components/front2/React.tsx";
+import ReactPage from "./components/front2/React.tsx";
 
 import Design from "./components/design/Design.tsx";
 import Figma from "./components/design/Figma.tsx";
@@ -28,11 +28,13 @@ import Teoria from "./components/ihc/Teoria.tsx";
 import Teste from "./components/ihc/Teste.tsx";
 import Heuristica from "./components/ihc/Heuristica.tsx";
 
+import { useState, useEffect } from 'react';
 
-import { useState } from 'react';
+
 
 function App() {
   const [tema, setTema] = useState<'claro' | 'escuro' | 'maverick'>('claro');
+  const [visible, setVisible] = useState(false);
 
   useGSAP(() => {
     const h1 = new SplitText("h1", {
@@ -71,7 +73,27 @@ function App() {
       duration: 2,
       stagger: 0.5
     });
+
   });
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    gsap.to("#back-to-top", {
+      opacity: visible ? 1 : 0,
+      pointerEvents: visible ? "auto" : "none",
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }, [visible]);
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -163,7 +185,7 @@ function App() {
             <Route path="/front2" element={<Front2 />} />
             <Route path="/front2/js" element={<Javascript />} />
             <Route path="/front2/gsap" element={<Gsap />} />
-            <Route path="/front2/react" element={<React />} />
+            <Route path="/front2/react" element={<ReactPage />} />
 
             <Route path="/design" element={<Design />} />
             <Route path="/design/figma" element={<Figma />} />
@@ -177,6 +199,13 @@ function App() {
           </Routes>
         </section>
       </section>
+      <button
+        id="back-to-top"
+        onClick={handleClick}
+        style={{ opacity: 0, pointerEvents: "auto" }}
+      >
+        Inicio
+      </button>
     </>
   );
 }
